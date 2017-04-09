@@ -3,6 +3,7 @@
  * its ADC register is 10-bit 
  * And its ADC's 
  * stable  
+ * © kirolos Magdy
  */
 
 #define A0 17
