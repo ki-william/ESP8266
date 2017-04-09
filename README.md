@@ -1,4 +1,4 @@
-# NodeMcu
+# NodeMcu(ESP8266)
 
  *NodeMcu kit projects and examples using C/C++*
 
@@ -6,6 +6,8 @@
 
 NodeMcu is a dev-kit based on esp family you can program it using lua , C/C++ , Arduino C , python and more.
 but here we will use C/C++ and Arduino C 
+
+NOTE: Whatever that can works on NodeMCU can works on any ESP8266 kit 
 
 you can know more about Arduino IDE library from here 
 https://github.com/esp8266/Arduino
