@@ -10,6 +10,8 @@
 
 #define ConnectionMode 1 //1 for station 2 for AP and 3 for both 
 
+IPAddress string_to_ip (String) ;
+
 
 
 
@@ -193,3 +195,162 @@ void loop()
     
 
 }
+
+
+
+//function that coverts your string to an IP format that the esp can understand it 
+IPAddress string_to_ip (String IPstring="0.0.0.0")
+{
+
+  uint8_t  i=0,j=0,k=0,l=0,ip1=0,ip2=0,ip3=0,ip4=0;
+  uint8_t x=0;   bool binary[32]; 
+  int result=0 ; char power =0;
+
+ //----------------------------------------------------------------------------------
+    
+  //get the length of every section of the 4 section in the given IP
+  while(IPstring[x]!='.')  { ++i ;  ++x; }
+  x++;
+  while(IPstring[x]!='.')  { ++j ;  ++x; }
+  x++;
+  while(IPstring[x]!='.')  { ++k ;  ++x; }
+  x++;
+  while(IPstring[x]!='\0') { ++l ;  ++x; }
+  int a[i],b[j],c[k],d[l];
+
+ //----------------------------------------------------------------------------------
+
+  //split the string to integers//
+  for(int h=0 ; h<i;h++)
+  {
+    a[h]=(IPstring[h]-'0');
+  }
+  for(int h=i+1,indo=0 ; h<=(i+j);h++)
+  {
+    b[indo]=IPstring[h]-'0';
+    indo++;
+  }
+  for(int h=(i+2+j),indo=0 ; h<=(i+j+1+k);h++)
+  {
+    c[indo]=IPstring[h]-'0';
+    indo++;
+  }
+  for(int h=(i+j+k+3),indo=0 ; h<=(i+j+k+l+2);h++)
+  {
+    d[indo]=IPstring[h]-'0';
+    indo++;
+  }
+
+ //----------------------------------------------------------------------------------
+
+  //collect the characters in one integers//
+  
+  //ip1 
+  for(int h=0,q=i ; h<i;h++)
+  {  
+    
+    ip1+=a[h]*pow(10,q-1);
+    q--;
+  }
+
+  
+  //ip2
+  for(int h=0, q=j ; h<j;h++)
+  {
+    
+    ip2+=b[h]*pow(10,q-1);
+    q--;
+  }
+
+  //ip3
+  for(int h=0, q=k ; h<k;h++)
+  {
+   
+    ip3+=c[h]*pow(10,q-1);
+    q--;
+  }
+
+  //ip4
+  for(int h=0, q=l ; h<l;h++)
+  {
+
+    ip4+=d[h]*pow(10,q-1);
+    q--;
+    
+  }
+
+
+  
+//----------------------------------------------------------------------------------
+
+
+/*
+ * IPAddress Format        : ip4.ip3.ip2.ip1   
+ * IPAdress class Format   : 100.0.168.192
+ * Original                : 192.168.0.100 
+ */
+
+  //IP Binary representation
+ 
+    uint8_t index ;
+    index=31;
+
+
+    //ip1
+    int temp1=ip1;
+    for(int c=0;c<8;c++)
+    {   
+       if(temp1%2==0){ binary[index]=0; }
+       else { binary[index]=1; }
+       temp1/=2;
+       --index;
+    }
+
+    //ip2
+    int temp2=ip2;
+    for(int c=0;c<8;c++)
+    {
+       if(temp2%2==0){ binary[index]=0; }
+       else { binary[index]=1; }
+       temp2=temp2/2;
+       --index; 
+    }
+    
+    //ip3
+    int temp3=ip3;
+    for(int c=0;c<8;c++)
+    {
+       if(temp3%2==0){ binary[index]=0; }
+       else { binary[index]=1; }
+       temp3=temp3/2;
+       --index; 
+    }
+    
+
+    //ip4
+    int temp4=ip4;
+    for(int c=0;c<8;c++)
+    {
+       if(temp4%2==0){ binary[index]=0; }
+       else { binary[index]=1; }
+       temp4=temp4/2;
+       --index;
+    }
+    
+    
+//----------------------------------------------------------------------------------
+
+   //convert the binary IP to int Value
+   
+   for(int m=31 ;m>=0;m--)
+   {
+    if(binary[m]==1)  {result+= binary[m]*pow(2,power) ;}
+    power++;
+   }
+   
+//----------------------------------------------------------------------------------
+
+    return (IPAddress)result ;
+
+ 
+}//sting_to_ip function closing bracket//
