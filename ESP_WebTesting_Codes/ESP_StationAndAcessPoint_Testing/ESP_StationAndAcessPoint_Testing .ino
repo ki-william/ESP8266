@@ -27,6 +27,7 @@ void setup()
       
        
       //Tring to Connect to the WiFi Network
+      // a function to config the local ip and othe config  //void config(IPAddress local_ip, IPAddress gateway, IPAddress subnet)//
       WiFi.begin("NodeMCU","mypassword"); // uint8_t begin (char* SSID , char* Password ,int Channel) NOTE : you can ignore channel number and it'll be choosen auto
       
       
