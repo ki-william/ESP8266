@@ -1,5 +1,5 @@
 /*
- * NodeMcue Can works in the following connection modes  
+ * NodeMcue(ESP8266) Can works in the following connection modes  
  * 1-Station "STA" 
  * 2-Acesspoint "AP" 
  * 3-Both "AP_STA"
